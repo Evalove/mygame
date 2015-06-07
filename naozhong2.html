@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>可以加背景的闹钟</title>
+		<style>
+			*{
+				margin:0px;
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="J_canvas" width="1000" height="1000"></canvas>
+		<script>
+			window.onload=function (){
+				var oCanvas=document.getElementById('J_canvas');
+				var oGc=oCanvas.getContext("2d");
+				oGc.translate(250,250);
+				function draw(){
+				
+				oGc.clearRect(-250,-250,oCanvas.width,oCanvas.height);
+				
+				var oDate=new Date();
+			    var J_hour=oDate.getHours();
+				var J_min=oDate.getMinutes();
+				var J_sencond=oDate.getSeconds();
+				var bg=new Image();
+			    bg.src="img/3.jpg";
+			    oGc.drawImage(bg,-250,-250);
+				//首先画个表盘
+				oGc.strokeStyle="blueviolet";
+				oGc.lineWidth=8;
+				oGc.beginPath();
+				oGc.arc(0,0,150,0,2*Math.PI);
+				oGc.closePath();
+				oGc.stroke();
+				
+				//画钟表上的刻度
+					
+			        //画表盘上的时钟刻度
+					for(var i=0;i<12;i++){
+						oGc.save();
+						oGc.strokeStyle="aqua";
+			       		oGc.lineWidth=7;
+						oGc.rotate(i*Math.PI/6);
+						oGc.beginPath();
+						oGc.moveTo(130,0);
+				        oGc.lineTo(150,0);
+				        oGc.closePath();
+						oGc.stroke();
+					    oGc.restore();
+					   }
+					//画表盘的分秒对应的刻度
+					for(var j=0;j<60;j++){
+						oGc.save();
+						oGc.strokeStyle='#000000';
+						oGc.lineWidth=3;
+						oGc.rotate(j*Math.PI/30);
+						oGc.beginPath();
+						oGc.moveTo(135,0);
+				        oGc.lineTo(150,0);
+				        oGc.closePath();
+						oGc.stroke();
+					    oGc.restore();
+					}
+					
+			        //画表盘上的针
+			        oGc.save();
+			        
+			        oGc.lineWidth=7;
+			        oGc.strokeStyle="cornflowerblue";
+			        
+			        oGc.rotate((J_hour+J_min/60)*Math.PI/6);
+			        oGc.beginPath();
+			        oGc.moveTo(0,5);
+			        oGc.lineTo(0,-105);
+			        oGc.closePath();
+			        oGc.stroke();
+			        
+			        oGc.restore();
+			        
+					//画表盘的分针
+				    oGc.save();
+				    
+			        oGc.lineWidth=5;
+			        oGc.strokeStyle="coral";
+			        oGc.rotate(J_min*Math.PI/30);
+			          oGc.beginPath();
+			        oGc.moveTo(0,5);
+			      
+			        oGc.lineTo(0,-110);
+			        oGc.closePath();
+			        oGc.stroke();
+			      
+			        oGc.restore();
+			        
+			        //画表盘的秒针
+				    oGc.save();
+				    
+			        oGc.lineWidth=3;
+			        oGc.strokeStyle="chartreuse";
+			        oGc.rotate(J_sencond*Math.PI/30);
+			         oGc.beginPath();
+			        oGc.moveTo(0,8);
+			       
+			        oGc.lineTo(0,-125);
+			         oGc.closePath();
+			        oGc.stroke();
+			       
+			        oGc.restore();
+				}
+		    draw();
+		    setInterval(draw,1000);
+			}
+		</script>
+	</body>
+</html>
